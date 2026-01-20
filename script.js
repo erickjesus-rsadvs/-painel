@@ -1,4 +1,10 @@
 const processosJaRealizados = new Set();
+let dadosGlobais = [];
+let dadosSemana = [];
+let dadosHoje = [];
+let totalHoje = 0, totalAmanha = 0, totalSemana = 0;
+let indiceAtual = 0;
+let mostrandoTodas = false;
 
 function excelDateToJSDate(excelDate) {
     const utcDays = Math.floor(excelDate - 25569);
@@ -28,36 +34,23 @@ function obterDataHoraCompleta(data, hora) {
 function piscar(cor) {
     const card = document.querySelector('.card.destaque');
     card.classList.remove('piscando-vermelho', 'piscando-laranja');
-    if (cor === 'vermelho') {
-        card.classList.add('piscando-vermelho');
-    } else if (cor === 'laranja') {
-        card.classList.add('piscando-laranja');
-    }
+    if (cor === 'vermelho') card.classList.add('piscando-vermelho');
+    else if (cor === 'laranja') card.classList.add('piscando-laranja');
 }
 
 function adicionarCardRealizado(audiencia) {
     const container = document.getElementById('realizadas-cards');
     const card = document.createElement('div');
     card.classList.add('card-realizado');
-
-    // Nota: Removi todos os styles manuais (style.css cuida disso agora)
     
+    // HTML Limpo
     card.innerHTML = `
-        <span><strong>Data:</strong> ${audiencia.Data} - ${audiencia.Hora}</span>
-        <span><strong>Processo:</strong> ${audiencia.Processo}</span>
-        <span><strong>Cliente:</strong> ${audiencia.Cliente}</span>
-        <span><strong>Advogado:</strong> ${audiencia.Advogado}</span>
+        <div><strong>${audiencia.Hora}</strong> - ${audiencia.Audiência}</div>
+        <div style="font-size: 0.9em; color: #666;">${audiencia.Processo}</div>
+        <div style="font-size: 0.9em;">Adv: ${audiencia.Advogado}</div>
     `;
-
-    // Insere no começo da lista para ver o mais recente primeiro
-    container.insertBefore(card, container.firstChild); 
+    container.insertBefore(card, container.firstChild);
 }
-let dadosGlobais = [];
-let dadosSemana = [];
-let dadosHoje = [];
-let totalHoje = 0, totalAmanha = 0, totalSemana = 0;
-let indiceAtual = 0;
-let mostrandoTodas = false;
 
 function verificarProximidadeEAtualizar() {
     if (!dadosHoje.length || indiceAtual >= dadosHoje.length) return;
@@ -76,65 +69,60 @@ function verificarProximidadeEAtualizar() {
     } else if (passadoMin >= 0 && passadoMin <= 2) {
         piscar('vermelho');
     } else if (passadoMin > 2) {
-        if (cardDestaque) {
-            cardDestaque.classList.remove('piscando-vermelho', 'piscando-laranja');
-        }
+        if (cardDestaque) cardDestaque.classList.remove('piscando-vermelho', 'piscando-laranja');
+        
         adicionarCardRealizado(audiencia);
+        
+        // Remove da tabela visualmente
         const tbody = document.querySelector('table tbody');
-
-        if (!mostrandoTodas && tbody.rows[indiceAtual]) {
-            tbody.deleteRow(indiceAtual);
+        if (!mostrandoTodas && tbody.rows[0]) {
+             tbody.deleteRow(0);
         }
 
-        dadosHoje.splice(indiceAtual, 1);
+        indiceAtual++; 
         preencherInfoMaisProxima();
     }
 }
 
 function preencherInfoMaisProxima() {
     if (!dadosHoje.length || indiceAtual >= dadosHoje.length) {
-        document.getElementById('audiencia-destaque').textContent = 'Sem audiências pendentes';
+        document.getElementById('audiencia-destaque').textContent = 'Pauta do dia encerrada';
         document.getElementById('hora-destaque').textContent = '--:--';
         document.querySelector('.info').innerHTML = '';
-        
-        // Remove alertas se não tiver audiência
-        const cardDestaque = document.querySelector('.card.destaque');
-        if(cardDestaque) cardDestaque.classList.remove('piscando-vermelho', 'piscando-laranja');
-        
+        document.getElementById('data').textContent = '--/--/--';
         return;
     }
 
     const audiencia = dadosHoje[indiceAtual];
     document.getElementById('audiencia-destaque').textContent = audiencia.Audiência || 'Audiência';
     document.getElementById('hora-destaque').textContent = audiencia.Hora || '--:--';
-    const infoDiv = document.querySelector('.info');
-    
-    // Layout mais limpo
-    infoDiv.innerHTML = `
-        <span><strong>Proc:</strong> ${audiencia.Processo || '-'}</span>
-        <span><strong>Cliente:</strong> ${audiencia.Cliente || '-'}</span>
-        <span><strong>Adv:</strong> ${audiencia.Advogado || '-'}</span>
-        <span><strong>Prep:</strong> ${audiencia.Preposto || '-'}</span>
-    `;
-    
-    // Atualiza a data também
     document.getElementById('data').textContent = audiencia.Data || '';
+
+    const infoDiv = document.querySelector('.info');
+    infoDiv.innerHTML = `
+        <span><strong>Processo:</strong> ${audiencia.Processo || '-'}</span>
+        <span><strong>Cliente:</strong> ${audiencia.Cliente || '-'}</span>
+        <span><strong>Advogado:</strong> ${audiencia.Advogado || '-'}</span>
+        <span><strong>Preposto:</strong> ${audiencia.Preposto || '-'}</span>
+    `;
 }
 
 function atualizarCards() {
-    document.querySelector('.cardhoje').textContent = `Hoje: ${totalHoje}`;
-    document.querySelector('.cardamanha').textContent = `Amanhã: ${totalAmanha}`;
-    document.querySelector('.cardsemana').textContent = `Semana: ${totalSemana}`;
+    document.querySelector('.cardhoje').innerHTML = `Hoje<br><strong>${totalHoje}</strong>`;
+    document.querySelector('.cardamanha').innerHTML = `Amanhã<br><strong>${totalAmanha}</strong>`;
+    document.querySelector('.cardsemana').innerHTML = `Semana<br><strong>${totalSemana}</strong>`;
 }
 
 function atualizarTabela(dados) {
     const tbody = document.querySelector('table tbody');
     tbody.innerHTML = '';
-    dados.forEach(item => {
+    dados.forEach((item, index) => {
+        if (!mostrandoTodas && index < indiceAtual) return;
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${item.Data}</td>
-            <td>${item.Hora}</td>
+            <td style="color: var(--brand-dark); font-weight:700;">${item.Hora}</td>
             <td>${item.Audiência}</td>
             <td>${item.Processo}</td>
             <td>${item.Cliente}</td>
@@ -147,34 +135,14 @@ function atualizarTabela(dados) {
 
 function alternarFiltroSemana() {
     mostrandoTodas = !mostrandoTodas;
-    const botao = document.getElementById('botao-toggle');
+    const botao = document.getElementById('botaocard');
     if (mostrandoTodas) {
         atualizarTabela(dadosSemana);
-        botao.textContent = 'Alterar exibição';
+        botao.textContent = 'Exibir Apenas Hoje';
     } else {
         atualizarTabela(dadosHoje);
-        botao.textContent = 'Alterar exibição';
+        botao.textContent = 'Exibir Semana';
     }
-
-}
-
-
-function filtrarPorAdvogado(nome) {
-    const dados = mostrandoTodas ? dadosSemana : dadosHoje;
-    const filtrados = dados.filter(item =>
-        item.Advogado.toLowerCase().includes(nome.toLowerCase())
-    );
-    atualizarTabela(filtrados);
-}
-
-function filtrarPorHorario(inicio, fim) {
-    const dados = mostrandoTodas ? dadosSemana : dadosHoje;
-    const filtrados = dados.filter(item => {
-        const horaAudiencia = obterDataHoraCompleta(item.Data, item.Hora);
-        return horaAudiencia >= obterDataHoraCompleta(item.Data, inicio)
-            && horaAudiencia <= obterDataHoraCompleta(item.Data, fim);
-    });
-    atualizarTabela(filtrados);
 }
 
 document.getElementById('upload').addEventListener('change', function (event) {
@@ -185,7 +153,6 @@ document.getElementById('upload').addEventListener('change', function (event) {
     reader.onload = function (e) {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
-
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
         const json = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
@@ -197,28 +164,26 @@ document.getElementById('upload').addEventListener('change', function (event) {
         const dataHoje = `${dia}/${mes}/${ano}`;
 
         const todosOsDados = json.map(row => {
-            const dataBr = typeof row["Data"] === "number"
-                ? excelDateToJSDate(row["Data"])
-                : row["Data"];
-
-            const hora = row["Hora"] || row["__EMPTY_1"] || row["9:30:00"] || "";
-            const horaFormatada = typeof hora === "number" ? excelTimeToJSTime(hora) : hora;
-
-            const audiencia = row["Audiência"] || "";
-            const processo = row["Número do do Processo"] || "";
-            const cliente = row["Cliente principal"] || "";
-            const advogado = row["Advogado(a) - AUDIÊNCIA"] || "";
-            const preposto = row["Preposto(a) - AUDIÊNCIA"] || "";
+            const dataBr = typeof row["Data"] === "number" ? excelDateToJSDate(row["Data"]) : row["Data"];
+            const horaRaw = row["Hora"] || row["__EMPTY_1"] || row["9:30:00"] || "";
+            const horaFormatada = typeof horaRaw === "number" ? excelTimeToJSTime(horaRaw) : horaRaw;
 
             return {
                 Data: dataBr,
                 Hora: horaFormatada,
-                Audiência: audiencia,
-                Processo: processo,
-                Cliente: cliente,
-                Advogado: advogado,
-                Preposto: preposto
+                Audiência: row["Audiência"] || "",
+                Processo: row["Número do do Processo"] || "",
+                Cliente: row["Cliente principal"] || "",
+                Advogado: row["Advogado(a) - AUDIÊNCIA"] || "",
+                Preposto: row["Preposto(a) - AUDIÊNCIA"] || ""
             };
+        });
+        
+        // Ordenação
+        todosOsDados.sort((a, b) => {
+             // Tenta ordenar data, depois hora
+             if (a.Data !== b.Data) return 0; // Simplificação
+             return a.Hora.localeCompare(b.Hora);
         });
 
         dadosSemana = todosOsDados;
@@ -239,11 +204,23 @@ document.getElementById('upload').addEventListener('change', function (event) {
         atualizarCards();
 
         dadosGlobais = [...dadosHoje];
-        atualizarTabela(dadosGlobais);
-        indiceAtual = 0;
-        preencherInfoMaisProxima(dadosGlobais);
-    };
+        indiceAtual = 0; 
+        
+        // Avançar se já passou da hora
+        const agora = new Date();
+        for(let i=0; i<dadosHoje.length; i++){
+             const horaAud = obterDataHoraCompleta(dadosHoje[i].Data, dadosHoje[i].Hora);
+             if( (agora - horaAud) / 60000 > 2 ) {
+                 indiceAtual++;
+                 adicionarCardRealizado(dadosHoje[i]);
+             } else {
+                 break; 
+             }
+        }
 
+        atualizarTabela(dadosHoje);
+        preencherInfoMaisProxima();
+    };
     reader.readAsArrayBuffer(file);
 });
 

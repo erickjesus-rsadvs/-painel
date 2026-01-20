@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Painel de Audiências</title>
+    <title>Painel Jurídico</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -16,24 +17,22 @@
     <header>
       <div class="logo-container">
         <img src="logors.png" alt="Logo" class="logo">
-        <h1>PAUTA DE AUDIÊNCIAS E SESSÕES</h1>
+        <h1>Pauta de Audiências e Sessões</h1>
       </div>
     </header>
 
     <main id="content">
       
       <div class="card destaque">
-        <h2 class="titulo-destaque">PRÓXIMA AUDIÊNCIA</h2>
+        <span class="titulo-destaque">Próxima na Pauta</span>
         
         <div class="destaque-wrapper">
+            <div id="data">--/--/--</div>
             <div id="hora-destaque">--:--</div>
-            <div id="audiencia-destaque">Aguardando dados...</div>
+            <div id="audiencia-destaque">Aguardando planilha...</div>
         </div>
 
-        <div class="destaque-content">
-            <div id="data"></div>
-            <div class="info"></div>
-        </div>
+        <div class="info"></div>
       </div>
 
       <div class="card tabela-card">
@@ -50,26 +49,28 @@
                 <th>Preposto</th>
                 </tr>
             </thead>
-            <tbody>
-                </tbody>
+            <tbody></tbody>
             </table>
         </div>
 
-        <div class="controles-inferiores">
-            <button id="botaocard" onclick="alternarFiltroSemana()">Alternar Exibição (Hoje/Semana)</button>
-            
-            <div class="cards-container">
-                <div class="card-resumo cardhoje">Hoje: 0</div>
-                <div class="card-resumo cardamanha">Amanhã: 0</div>
-                <div class="card-resumo cardsemana">Semana: 0</div>
+        <div class="dashboard-area">
+            <div class="controles-inferiores">
+                <button id="botaocard" onclick="alternarFiltroSemana()">Ver Hoje / Semana</button>
+                
+                <div class="cards-container">
+                    <div class="card-resumo cardhoje">Hoje</div>
+                    <div class="card-resumo cardamanha">Amanhã</div>
+                    <div class="card-resumo cardsemana">Semana</div>
+                </div>
             </div>
         </div>
 
-        <h3 class="titulo-realizadas">Já Realizadas</h3>
-        <div id="realizadas-container">
-          <div id="realizadas-cards"></div>
+        <div class="realizadas-wrapper">
+            <h3 class="titulo-realizadas">Já Realizadas</h3>
+            <div id="realizadas-container">
+              <div id="realizadas-cards"></div>
+            </div>
         </div>
-        <div id="botaomostrar"></div>
       </div>
     </main>
     

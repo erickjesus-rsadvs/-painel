@@ -1,21 +1,26 @@
 :root {
-    --bg-color: #121212;         /* Fundo quase preto */
-    --card-bg: #1e1e1e;          /* Cinza escuro para cards */
-    --header-bg: #252525;        /* Cinza um pouco mais claro */
-    --text-primary: #ffffff;     /* Texto branco */
-    --text-secondary: #a0a0a0;   /* Texto cinza claro */
-    --accent-color: #4a90e2;     /* Azul sutil para destaques (opcional) */
-    --border-color: #333;        /* Bordas sutis */
-    --highlight-bg: #2c2c2c;     /* Fundo de destaque */
-    --table-stripe: #252525;     /* Listras da tabela */
+    /* --- PALETA LIGHT ELEGANT --- */
+    --bg-body: #f2f0ed;         /* Tom Gelo/Off-white da paleta */
+    --bg-card: #ffffff;         /* Branco puro para os cartões */
+    
+    --brand-dark: #614943;      /* Marrom Café (Textos e Cabeçalhos) */
+    --brand-light: #8f726a;     /* Um tom mais suave do marrom */
+    
+    --accent-gold: #d9ccb5;     /* Bege (Detalhes e fundos secundários) */
+    --text-main: #2b2c2e;       /* Cinza Chumbo (Texto corrido) */
+    --text-muted: #757575;      /* Cinza médio para legendas */
+    
+    --border-color: #e6e6e6;    /* Bordas muito sutis */
+    --shadow-soft: 0 10px 30px -10px rgba(97, 73, 67, 0.15); /* Sombra com tom marrom suave */
+    
     --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 body {
     margin: 0;
     padding: 20px;
-    background-color: var(--bg-color);
-    color: var(--text-primary);
+    background-color: var(--bg-body);
+    color: var(--text-main);
     font-family: var(--font-family);
     height: 100vh;
     box-sizing: border-box;
@@ -24,260 +29,264 @@ body {
     overflow-y: auto;
 }
 
-/* Scrollbar personalizada */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-::-webkit-scrollbar-track {
-    background: var(--bg-color); 
-}
-::-webkit-scrollbar-thumb {
-    background: #444; 
-    border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #666; 
-}
+/* Scrollbar discreta */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-light); }
 
-/* Header */
+/* --- HEADER --- */
 header {
-    background-color: var(--header-bg);
-    color: var(--text-primary);
-    padding: 15px 20px;
+    background-color: var(--bg-card);
+    color: var(--brand-dark);
+    padding: 15px 30px;
     border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    border: 1px solid var(--border-color);
+    margin-bottom: 30px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    justify-content: center;
+    border-top: 4px solid var(--brand-dark); /* Detalhe no topo */
 }
 
 .logo-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 25px;
     flex-wrap: wrap;
 }
 
 .logo-container img {
-    max-height: 80px; /* Reduzi um pouco para ficar mais elegante */
+    max-height: 65px;
     width: auto;
 }
 
 .logo-container h1 {
     margin: 0;
     font-size: 1.5rem;
-    font-weight: 600;
-    text-transform: uppercase;
+    font-weight: 700;
     letter-spacing: 1px;
-    text-align: center;
+    text-transform: uppercase;
+    color: var(--brand-dark);
 }
 
-/* Layout Principal */
+/* --- ESTRUTURA --- */
 #content {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
     flex-grow: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
 }
 
-/* Estilo Base dos Cards */
 .card {
-    background-color: var(--card-bg);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    border: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid white; /* Borda branca para limpeza */
 }
 
-/* Card de Destaque (Próxima Audiência) */
+/* --- CARD DESTAQUE (A Próxima Audiência) --- */
+/* A ideia aqui é um visual limpo, com números grandes */
 .card.destaque {
     text-align: center;
-    border-left: 5px solid var(--text-primary); /* Detalhe lateral */
-    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border-left: 8px solid var(--accent-gold); /* Lateral Bege */
+    background: linear-gradient(to right, #ffffff, #fcfbf9);
 }
 
 .titulo-destaque {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+    font-size: 0.8rem;
+    color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-top: 0;
-    margin-bottom: 15px;
+    letter-spacing: 4px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
 }
 
 .destaque-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    margin-bottom: 15px;
+    margin: 10px 0 20px 0;
 }
 
 #hora-destaque {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: var(--text-primary);
+    font-size: 5rem;
+    font-weight: 300; /* Fonte fina e elegante */
+    color: var(--brand-dark);
     line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -2px;
 }
 
 #audiencia-destaque {
-    font-size: 1.8rem;
-    font-weight: 500;
-    color: var(--text-primary);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-top: 5px;
 }
 
 #data {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: var(--brand-light);
+    font-weight: 500;
+    margin-bottom: 15px;
+    background-color: var(--bg-body);
+    display: inline-block;
+    padding: 5px 20px;
+    border-radius: 20px;
 }
 
 .info {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
-    color: var(--text-secondary);
-    font-size: 0.95rem;
+    gap: 20px;
+    font-size: 1rem;
+    color: var(--text-main);
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+}
+
+.info span {
+    background: var(--bg-body);
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
 }
 
 .info span strong {
-    color: var(--text-primary);
+    color: var(--brand-dark);
+    text-transform: uppercase;
+    font-size: 0.8em;
+    margin-right: 5px;
 }
 
-/* Animações de Alerta (Agora mais elegantes) */
-@keyframes piscar-vermelho {
-    0% { border-color: #ff4444; box-shadow: 0 0 0 rgba(255, 68, 68, 0); }
-    50% { border-color: #ff4444; box-shadow: 0 0 20px rgba(255, 68, 68, 0.4); background-color: #2a1515; }
-    100% { border-color: #ff4444; box-shadow: 0 0 0 rgba(255, 68, 68, 0); }
-}
-
-@keyframes piscar-laranja {
-    0% { border-color: #ff9800; }
-    50% { border-color: #ff9800; box-shadow: 0 0 15px rgba(255, 152, 0, 0.3); background-color: #2a2015; }
-    100% { border-color: #ff9800; }
-}
-
-.card.destaque.piscando-vermelho {
-    animation: piscar-vermelho 2s infinite;
-    border-left: 5px solid #ff4444;
-}
-
-.card.destaque.piscando-laranja {
-    animation: piscar-laranja 2s infinite;
-    border-left: 5px solid #ff9800;
-}
-
-/* Tabela */
+/* --- TABELA --- */
 .tabela-card {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Importante para o scroll interno */
+    padding: 0; /* Remove padding para a tabela encostar nas bordas */
+    overflow: hidden;
 }
 
 .tabela-scroll {
     overflow-x: auto;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
+    width: 100%;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: var(--card-bg);
 }
 
 th {
-    background-color: #2c2c2c;
-    color: var(--text-secondary);
-    font-weight: 600;
-    padding: 12px 15px;
+    background-color: var(--brand-dark); /* Marrom Escuro no Topo */
+    color: #ffffff;
+    font-weight: 500;
+    padding: 18px 20px;
     text-align: left;
-    border-bottom: 2px solid var(--border-color);
-    white-space: nowrap;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 td {
-    padding: 12px 15px;
+    padding: 16px 20px;
     border-bottom: 1px solid var(--border-color);
-    color: var(--text-primary);
+    color: var(--text-main);
     font-size: 1rem;
 }
 
-tr:nth-child(even) td {
-    background-color: rgba(255, 255, 255, 0.02);
+/* Zebra Striping muito sutil */
+tr:nth-child(even) td { background-color: #fbfbfb; }
+
+/* Hover elegante */
+tr:hover td { 
+    background-color: var(--accent-gold); 
+    color: var(--brand-dark);
+    transition: 0.2s;
+}
+tr:hover td strong { color: var(--brand-dark); } /* Garante contraste no hover */
+
+/* --- CONTROLES E DASHBOARD --- */
+.dashboard-area {
+    background-color: var(--bg-body); /* Área cinza clara para separar */
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
 }
 
-tr:hover td {
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* Controles e Cards Pequenos */
 .controles-inferiores {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin-bottom: 20px;
 }
 
 @media (min-width: 768px) {
-    .controles-inferiores {
-        flex-direction: row;
-        align-items: stretch;
-    }
+    .controles-inferiores { flex-direction: row; }
 }
 
 #botaocard {
-    background-color: #333;
+    background-color: var(--brand-dark);
     color: white;
-    padding: 15px 30px;
+    padding: 0 30px;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    border: 1px solid #444;
+    text-transform: uppercase;
+    border: none;
     cursor: pointer;
     transition: all 0.2s;
-    flex: 1;
+    box-shadow: 0 4px 10px rgba(97, 73, 67, 0.3);
+    min-height: 60px;
 }
 
 #botaocard:hover {
-    background-color: #444;
+    background-color: var(--brand-light);
     transform: translateY(-2px);
 }
 
 .cards-container {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     flex: 2;
-    justify-content: space-between;
 }
 
 .card-resumo {
-    background-color: #252525;
-    color: var(--text-primary);
+    background-color: #ffffff;
+    color: var(--text-main);
     padding: 15px;
     border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 0.85rem;
     text-align: center;
     flex: 1;
     border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* Área de Audiências Realizadas */
+.card-resumo strong {
+    font-size: 1.8rem;
+    color: var(--brand-dark);
+    display: block;
+    margin-top: 5px;
+}
+
+/* --- AUDIÊNCIAS REALIZADAS --- */
+.realizadas-wrapper {
+    padding: 20px;
+    background: #fff;
+}
+
 .titulo-realizadas {
-    font-size: 1rem;
-    color: var(--text-secondary);
-    margin-bottom: 10px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 5px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin: 0 0 15px 0;
+    font-weight: 600;
 }
 
 #realizadas-container {
@@ -291,47 +300,46 @@ tr:hover td {
 }
 
 .card-realizado {
-    background-color: #252525;
-    border: 1px solid var(--border-color);
-    border-left: 4px solid #555;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-left: 4px solid #ccc; /* Cinza neutro */
     padding: 15px;
     border-radius: 6px;
-    min-width: 300px;
-    color: #ccc;
-    font-size: 0.9rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    min-width: 260px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
 }
 
-.card-realizado span {
-    display: block; /* Quebra linha para ficar organizado */
-    margin-bottom: 4px;
+.card-realizado div { margin-bottom: 4px; }
+.card-realizado strong { color: var(--text-main); }
+
+/* --- ALERTAS (Piscando) --- */
+/* No light mode, não mudamos o fundo todo, piscamos a borda e o fundo levemente */
+@keyframes piscar-vermelho {
+    0% { border-left-color: #d32f2f; background-color: #fff; }
+    50% { border-left-color: #d32f2f; background-color: #ffebee; } /* Fundo rosado bem leve */
+    100% { border-left-color: #d32f2f; background-color: #fff; }
 }
 
-.card-realizado strong {
-    color: #fff;
+@keyframes piscar-laranja {
+    0% { border-left-color: #f57c00; background-color: #fff; }
+    50% { border-left-color: #f57c00; background-color: #fff3e0; } /* Fundo laranja bem leve */
+    100% { border-left-color: #f57c00; background-color: #fff; }
 }
 
-/* Input de Upload (Escondido mas bonito) */
-.upload-container {
-    margin-top: 20px;
-    text-align: center;
-}
+.card.destaque.piscando-vermelho { animation: piscar-vermelho 1.5s infinite; }
+.card.destaque.piscando-laranja { animation: piscar-laranja 1.5s infinite; }
 
-input[type="file"] {
-    display: none;
-}
-
+/* Input Upload */
+.upload-container { margin-top: 30px; text-align: center; }
 .custom-file-upload {
-    border: 1px dashed #555;
-    display: inline-block;
+    font-size: 13px;
+    border: 1px dashed #bbb;
     padding: 10px 20px;
     cursor: pointer;
     color: #888;
-    border-radius: 5px;
-    transition: all 0.2s;
+    border-radius: 6px;
+    transition: 0.2s;
 }
-
-.custom-file-upload:hover {
-    border-color: #fff;
-    color: #fff;
-}
+.custom-file-upload:hover { border-color: var(--brand-dark); color: var(--brand-dark); background: #fff; }
+input[type="file"] { display: none; }
