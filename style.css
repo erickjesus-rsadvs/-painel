@@ -1,17 +1,21 @@
 :root {
-    /* --- PALETA LIGHT ELEGANT --- */
-    --bg-body: #f2f0ed;         /* Tom Gelo/Off-white da paleta */
+    /* --- PALETA OFFICE (Marrom, Bege & Grafite) --- */
+    /* Fundo geral: Um bege bem claro da sua escala de beges */
+    --bg-body: #eeeae4;         
     --bg-card: #ffffff;         /* Branco puro para os cartões */
     
-    --brand-dark: #614943;      /* Marrom Café (Textos e Cabeçalhos) */
-    --brand-light: #8f726a;     /* Um tom mais suave do marrom */
+    /* Cores da Marca */
+    --brand-dark: #614943;      /* Marrom Café (Cabeçalhos, Botões, Th) */
+    --brand-light: #8c7670;     /* Um marrom mais suave para hovers e detalhes */
     
-    --accent-gold: #d9ccb5;     /* Bege (Detalhes e fundos secundários) */
-    --text-main: #2b2c2e;       /* Cinza Chumbo (Texto corrido) */
-    --text-muted: #757575;      /* Cinza médio para legendas */
+    /* Acentos e Textos */
+    --accent-gold: #d9ccb5;     /* Bege Areia (Barra lateral destaque, Hover tabela) */
+    --text-main: #2b2c2e;       /* Grafite Escuro (Texto principal) */
+    --text-muted: #726f71;      /* Cinza da sua escala (Legendas) */
     
-    --border-color: #e6e6e6;    /* Bordas muito sutis */
-    --shadow-soft: 0 10px 30px -10px rgba(97, 73, 67, 0.15); /* Sombra com tom marrom suave */
+    /* Estrutura */
+    --border-color: #e1d8c8;    /* Bege suave para bordas sutis */
+    --shadow-soft: 0 10px 30px -10px rgba(97, 73, 67, 0.15); /* Sombra com tom marrom */
     
     --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
@@ -32,8 +36,8 @@ body {
 /* Scrollbar discreta */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--brand-light); }
+::-webkit-scrollbar-thumb { background: #d1cfd0; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-dark); }
 
 /* --- HEADER --- */
 header {
@@ -45,7 +49,7 @@ header {
     box-shadow: var(--shadow-soft);
     display: flex;
     justify-content: center;
-    border-top: 4px solid var(--brand-dark); /* Detalhe no topo */
+    border-top: 4px solid var(--brand-dark); /* Marrom Café no topo */
 }
 
 .logo-container {
@@ -86,16 +90,17 @@ header {
     padding: 30px;
     border-radius: 16px;
     box-shadow: var(--shadow-soft);
-    border: 1px solid white; /* Borda branca para limpeza */
+    border: 1px solid white; 
 }
 
 /* --- CARD DESTAQUE (A Próxima Audiência) --- */
-/* A ideia aqui é um visual limpo, com números grandes */
 .card.destaque {
     text-align: center;
     position: relative;
     overflow: hidden;
-    border-left: 8px solid var(--accent-gold); /* Lateral Bege */
+    /* Lateral Bege Areia */
+    border-left: 8px solid var(--accent-gold); 
+    /* Gradiente sutil para o fundo */
     background: linear-gradient(to right, #ffffff, #fcfbf9);
 }
 
@@ -115,8 +120,8 @@ header {
 
 #hora-destaque {
     font-size: 5rem;
-    font-weight: 300; /* Fonte fina e elegante */
-    color: var(--brand-dark);
+    font-weight: 300; 
+    color: var(--brand-dark); /* Marrom Café */
     line-height: 1;
     font-variant-numeric: tabular-nums;
     letter-spacing: -2px;
@@ -125,16 +130,16 @@ header {
 #audiencia-destaque {
     font-size: 2rem;
     font-weight: 600;
-    color: var(--text-main);
+    color: var(--text-main); /* Grafite Escuro */
     margin-top: 5px;
 }
 
 #data {
     font-size: 1.2rem;
-    color: var(--brand-light);
+    color: var(--brand-dark);
     font-weight: 500;
     margin-bottom: 15px;
-    background-color: var(--bg-body);
+    background-color: var(--bg-body); /* Fundo bege claro */
     display: inline-block;
     padding: 5px 20px;
     border-radius: 20px;
@@ -155,7 +160,7 @@ header {
     background: var(--bg-body);
     padding: 8px 16px;
     border-radius: 8px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--border-color);
 }
 
 .info span strong {
@@ -170,7 +175,7 @@ header {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 0; /* Remove padding para a tabela encostar nas bordas */
+    padding: 0; 
     overflow: hidden;
 }
 
@@ -185,7 +190,7 @@ table {
 }
 
 th {
-    background-color: var(--brand-dark); /* Marrom Escuro no Topo */
+    background-color: var(--brand-dark); /* Marrom Café */
     color: #ffffff;
     font-weight: 500;
     padding: 18px 20px;
@@ -202,20 +207,20 @@ td {
     font-size: 1rem;
 }
 
-/* Zebra Striping muito sutil */
-tr:nth-child(even) td { background-color: #fbfbfb; }
+/* Zebra Striping: Bege muito sutil da escala */
+tr:nth-child(even) td { background-color: #f9f6f3; }
 
-/* Hover elegante */
+/* Hover elegante: Bege Areia */
 tr:hover td { 
     background-color: var(--accent-gold); 
     color: var(--brand-dark);
     transition: 0.2s;
 }
-tr:hover td strong { color: var(--brand-dark); } /* Garante contraste no hover */
+tr:hover td strong { color: var(--brand-dark); } 
 
 /* --- CONTROLES E DASHBOARD --- */
 .dashboard-area {
-    background-color: var(--bg-body); /* Área cinza clara para separar */
+    background-color: var(--bg-body); 
     padding: 20px;
     border-top: 1px solid var(--border-color);
 }
@@ -231,7 +236,7 @@ tr:hover td strong { color: var(--brand-dark); } /* Garante contraste no hover *
 }
 
 #botaocard {
-    background-color: var(--brand-dark);
+    background-color: var(--brand-dark); /* Marrom Café */
     color: white;
     padding: 0 30px;
     border-radius: 8px;
@@ -246,7 +251,7 @@ tr:hover td strong { color: var(--brand-dark); } /* Garante contraste no hover *
 }
 
 #botaocard:hover {
-    background-color: var(--brand-light);
+    background-color: #4e3833; /* Um pouco mais escuro no hover */
     transform: translateY(-2px);
 }
 
@@ -300,9 +305,9 @@ tr:hover td strong { color: var(--brand-dark); } /* Garante contraste no hover *
 }
 
 .card-realizado {
-    background-color: #f9f9f9;
-    border: 1px solid #eee;
-    border-left: 4px solid #ccc; /* Cinza neutro */
+    background-color: #f9f6f3; /* Bege muito leve */
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--accent-gold); /* Bege Areia */
     padding: 15px;
     border-radius: 6px;
     min-width: 260px;
@@ -314,16 +319,15 @@ tr:hover td strong { color: var(--brand-dark); } /* Garante contraste no hover *
 .card-realizado strong { color: var(--text-main); }
 
 /* --- ALERTAS (Piscando) --- */
-/* No light mode, não mudamos o fundo todo, piscamos a borda e o fundo levemente */
 @keyframes piscar-vermelho {
     0% { border-left-color: #d32f2f; background-color: #fff; }
-    50% { border-left-color: #d32f2f; background-color: #ffebee; } /* Fundo rosado bem leve */
+    50% { border-left-color: #d32f2f; background-color: #ffebee; } 
     100% { border-left-color: #d32f2f; background-color: #fff; }
 }
 
 @keyframes piscar-laranja {
     0% { border-left-color: #f57c00; background-color: #fff; }
-    50% { border-left-color: #f57c00; background-color: #fff3e0; } /* Fundo laranja bem leve */
+    50% { border-left-color: #f57c00; background-color: #fff3e0; } 
     100% { border-left-color: #f57c00; background-color: #fff; }
 }
 
